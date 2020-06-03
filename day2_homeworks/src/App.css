@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: #FDEB71;
 }
 
 .App-logo {
@@ -11,6 +12,25 @@
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
+}
+
+select {
+  padding: 20px;
+  background-color: transparent;
+  margin-bottom: 20px !important;
+  font-size: 25px !important;
+  font-weight: 700;
+  border: 1px dotted red;
+  border-radius: 5%;
+}
+
+.options {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+select:focus{
+  outline: none;
 }
 
 .App-header {
