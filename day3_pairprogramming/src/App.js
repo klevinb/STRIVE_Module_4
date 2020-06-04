@@ -6,6 +6,8 @@ import Badge from './components/MyBadge'
 function App() {
   return (
     <div className="App">
+      <AlertMessage text="This is an alert!" />
+      <Badge color="warning" text="KB" />
     </div>
   );
 }
