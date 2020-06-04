@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Jumbotron, Button, Container, Row, Col, Card, DropdownButton, Dropdown } from 'react-bootstrap'
+import { Jumbotron, Button, InputGroup, FormControl, Container, Row, Col, Card, DropdownButton, Dropdown } from 'react-bootstrap'
 
 
 let bookCategories = ["fantasy", "horror", "history", "scifi", "romance"]
@@ -25,6 +25,23 @@ class Home extends Component {
         });
     }
 
+    hanndleQuery = (searchQuery) => {
+        let category = this.state.categorySelected
+
+        if (searchQuery) {
+            let filteredBook = books[category].filter((book) =>
+                book.title.toLowerCase().includes(searchQuery)
+            );
+            this.setState({
+                books: filteredBook,
+            })
+        } else {
+            this.setState({
+                books: books[category]
+            });
+        }
+    }
+
     render() {
         return (
             <>
@@ -38,13 +55,22 @@ class Home extends Component {
                         <Button variant="primary">Learn more</Button>
                     </p>
                 </Jumbotron>
-                <DropdownButton id="dropdown-item-button" title={this.state.categorySelected}>
-                    {bookCategories.map((category, index) => {
-                        return (
-                            < Dropdown.Item as="button" key={`category-${index}`} onClick={() => this.hanndleChange(category)}>{category}</Dropdown.Item>
-                        )
-                    })}
-                </DropdownButton>
+                <InputGroup className="mb-3">
+                    <DropdownButton
+                        as={InputGroup.Prepend}
+                        variant="outline-secondary"
+                        title={this.state.categorySelected}
+                        id="input-group-dropdown-1"
+                    >
+                        {bookCategories.map((category, index) => {
+                            return (
+                                < Dropdown.Item as="button" key={`category-${index}`} onClick={() => this.hanndleChange(category)}>{category}</Dropdown.Item>
+                            )
+                        })}
+                    </DropdownButton>
+                    <FormControl aria-describedby="basic-addon1" placeholder="Search for books" onChange={(event) => this.hanndleQuery(event.target.value)} />
+                </InputGroup>
+
                 <Container>
                     <Row>
                         {this.state.books.slice(0, 5).map((book) => {

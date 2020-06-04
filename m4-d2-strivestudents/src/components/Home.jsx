@@ -1,6 +1,7 @@
-import React, {Component} from 'react';
-import {Container, Row, Col, Carousel} from 'react-bootstrap'
+import React, { Component } from 'react';
+import { Container, Row, Col, Carousel } from 'react-bootstrap'
 import items from '../menu.json'
+import Dishcomments from './DishComments'
 
 class Home extends Component {
     render(){
