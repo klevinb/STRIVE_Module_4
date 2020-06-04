@@ -1,11 +1,11 @@
 import React from 'react';
-import { Card, Button, Row, Col } from 'react-bootstrap'
+import { Card, Button, Col } from 'react-bootstrap'
 
 function SingleBook(props) {
     return (
         <>
-            <Col className="col-6 col-md-3 col-lg-2 mb-3">
-                <Card style={{ width: '10rem' }}>
+            <Col md={3} className="mb-3">
+                <Card style={{ width: '12rem' }}>
                     <Card.Img variant="top" src={props.book.img} />
                     <Card.Body>
                         <Card.Title>{props.book.title}</Card.Title>

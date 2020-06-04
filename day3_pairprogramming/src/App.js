@@ -23,7 +23,7 @@ class App extends Component {
           <Badge color="warning" text="KB" />
           <span><b>Single Book Component</b></span>
           <SingleBook book={books.history.slice(0, 1)[0]} />
-          <span><b>BookList Component</b></span>
+          <span><b>BookList Component + Search Feature</b></span>
           <BookList book={books.history.slice(0, 20)} />
         </Container>
       </div >
