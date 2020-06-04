@@ -4,7 +4,24 @@ import items from '../menu.json'
 import Dishcomments from './DishComments'
 
 class Home extends Component {
-    render(){
+
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            dish: null,
+        }
+    }
+
+
+    selectedDish = (dishInput) => {
+        this.setState({
+            dish: dishInput
+        });
+    }
+
+
+    render() {
 
         console.log(this.props)
         return (
