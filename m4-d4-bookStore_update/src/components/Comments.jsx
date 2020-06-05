@@ -10,6 +10,30 @@ class Comments extends Component {
         editElement: null
     }
 
+    deleteComment = async (id) => {
+        try {
+            let response = await fetch("https://striveschool.herokuapp.com/api/comments/" + id, {
+                method: "DELETE",
+                headers: {
+                    'Authorization': 'Basic ' + btoa("user16:c9WEUxMS294hN6fF")
+                }
+            })
+            if (response.ok) {
+                alert("You deleted a comment!")
+            } else {
+                alert("Something went wrong!")
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    editComment = async (id) => {
+        this.setState({
+            editElement: id
+        });
+    }
+
     filteredComments = async (event) => {
         let comments = this.state.comments
 
