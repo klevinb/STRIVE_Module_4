@@ -9,21 +9,18 @@ class BookList extends Component {
     }
 
     searchQuery = (searchQueryInput) => {
-        let booksT = this.state.books
 
         if (searchQueryInput) {
-            let filteredBooks = booksT.filter((book) => book.title.toLowerCase().includes(searchQueryInput))
+            let filteredBooks = this.props.book.filter((book) => book.title.toLowerCase().includes(searchQueryInput))
             this.setState({
                 books: filteredBooks
             });
         } else {
 
             this.setState({
-                books: booksT
+                books: this.props.book
             });
         }
-
-
     }
 
     render() {
