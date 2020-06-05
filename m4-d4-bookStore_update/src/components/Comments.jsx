@@ -10,6 +10,40 @@ class Comments extends Component {
         editElement: null
     }
 
+    filteredComments = async (event) => {
+        let comments = this.state.comments
+
+        if (event) {
+            let filteredComments = comments.filter((comment) => comment.comment.toLowerCase().includes(event))
+            this.setState({
+                comments: filteredComments
+            });
+        } else {
+            this.componentDidMount()
+        }
+    }
+
+    componentDidMount = async () => {
+        try {
+            let response = await fetch("https://striveschool.herokuapp.com/api/comments/" + this.state.book_id, {
+                headers: {
+                    'Authorization': 'Basic ' + btoa("user16:c9WEUxMS294hN6fF")
+                }
+            })
+            let comments = await response.json()
+
+            if (comments.length === 0) {
+                alert("There are no comments for this book!")
+            } else {
+                this.setState({
+                    comments
+                });
+            }
+        } catch (err) {
+
+        }
+    }
+
 
 
     render() {
