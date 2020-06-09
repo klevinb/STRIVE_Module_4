@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <h2>Netflix, Navigation</h2>
+
+    <h4>
+      In this exercise you'll apply your new knowledge about react-router-dom. Remember to install the package from npm
+      / yarn.
+    </h4>
+
+    <pre>
+      <code>
+        API INFO:
+
+        Register to http://www.omdbapi.com/
+
+        Once registered, you'll receive via email an api key.
+        The API has a detail method:
+
+        http://www.omdbapi.com/?apikey=[YOUR API KEY]&i=tt0241527
+       
+        That gives you extra info about a movie:
+
+        {
+            "Title": "Harry Potter and the Sorcerer's Stone",
+            "Year": "2001",
+            "Rated": "PG",
+            "Released": "16 Nov 2001",
+            "Runtime": "152 min",
+            "Genre": "Adventure, Family, Fantasy",
+            "Director": "Chris Columbus",
+            "Writer": "J.K. Rowling (novel), Steve Kloves (screenplay)",
+            "Actors": "Richard Harris, Maggie Smith, Robbie Coltrane, Saunders Triplets",
+            "Plot": "An orphaned boy enrolls in a school of wizardry, where he learns the truth about himself, his family and the terrible evil that haunts the magical world.",
+            "Language": "English",
+            "Country": "UK, USA",
+            "Awards": "Nominated for 3 Oscars. Another 17 wins & 62 nominations.",
+            "Poster": "https://m.media-amazon.com/images/M/MV5BNjQ3NWNlNmQtMTE5ZS00MDdmLTlkZjUtZTBlM2UxMGFiMTU3XkEyXkFqcGdeQXVyNjUwNzk3NDc@._V1_SX300.jpg",
+            "Ratings": [
+                {
+                    "Source": "Internet Movie Database",
+                    "Value": "7.6/10"
+                },
+                {
+                    "Source": "Rotten Tomatoes",
+                    "Value": "81%"
+                },
+                {
+                    "Source": "Metacritic",
+                    "Value": "64/100"
+                }
+            ],
+            "Metascore": "64",
+            "imdbRating": "7.6",
+            "imdbVotes": "572,463",
+            "imdbID": "tt0241527",
+            "Type": "movie",
+            "DVD": "28 May 2002",
+            "BoxOffice": "$317,557,891",
+            "Production": "Warner Bros. Pictures",
+            "Website": "http://movies.warnerbros.com/awards/harry.html",
+            "Response": "True"
+        }
+
+        You have a CRUD endpoint for comments on:
+
+        https://striveschool.herokuapp.com/api/comments/
+
+        This means you can GET, DELETE, POST, PUT data from there.
+
+        The Comment structure is this:
+
+        {
+          "comment": "A good movie but definitely I don't like many parts of the plot",
+          "rate": 3,
+          "elementId": "tt1756545"
+        }
+
+        Where:
+        - comment is the comment inserted by the user
+        - rate is a value between 1 and 5
+        - elementId is the imdbID of the movie / serie
+
+      </code>
+    </pre>
+
+    <h1>Netflix App - Router</h1>
+    <ol>
+      <li>
+        Create a Router to navigate to navigate to a ShowDetail component
+      </li>
+      <li>
+        Create ShowDetail component that receives from query string the ID and fetch all the informations (from omdb &
+        comments too)
+      </li>
+      <li>
+        Change every Show (Movie or Serie) to be clickable and to redirect to the ShowDetail component
+      </li>
+    </ol>
+
+    <h1>EXTRA</h1>
+    <ul>
+      <li>
+        Create a Router to navigate to navigate to a SearchResult component
+      </li>
+      <li>
+        Create SearchResult component that receives from query string the "search query" and present shows as a list
+      </li>
+      <li>
+        Link every show in the result with the detail page
+      </li>
+      <li>
+        Add loaders / empty states
+      </li>
+    </ul>
+  </body>
+</html>

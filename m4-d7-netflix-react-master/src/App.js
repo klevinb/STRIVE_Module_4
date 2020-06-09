@@ -1,0 +1,148 @@
+import React, { Component } from "react";
+import "./App.css";
+import { Container, Alert, Dropdown } from "react-bootstrap";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Gallery from "./components/Gallery";
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      harryPotterMovies: [],
+      spiderManMovies: [],
+      starWarsMovies: [],
+      searchedMovies: [],
+      loading: true,
+      error: false,
+    };
+  }
+
+  url = "http://www.omdbapi.com/?apikey=71eeae0a";
+
+  componentDidMount = () => {
+    Promise.all([
+      fetch(this.url + "&s=harry%20potter")
+        .then((response) => response.json())
+        .then((responseObject) =>
+          this.setState({ harryPotterMovies: responseObject.Search })
+        ),
+      fetch(this.url + "&s=spider%20man")
+        .then((response) => response.json())
+        .then((responseObject) =>
+          this.setState({ spiderManMovies: responseObject.Search })
+        ),
+      fetch(this.url + "&s=star%20wars")
+        .then((response) => response.json())
+        .then((responseObject) =>
+          this.setState({ starWarsMovies: responseObject.Search })
+        ),
+    ])
+      .then(() => this.setState({ loading: false }))
+      .catch((err) => {
+        this.setState({ error: true });
+        console.log("An error has occurred:", err);
+      });
+  };
+
+  showSearchResult = (searchString) => {
+    fetch(this.url + "&s=" + searchString)
+      .then((response) => response.json())
+      .then((responseObject) =>
+        this.setState({ searchedMovies: responseObject.Search })
+      );
+  };
+
+  render() {
+    return (
+
+      <Router>
+        <div className="App">
+          {console.log("APP PROPS", this.props)}
+          <div>
+            <Navbar showSearchResult={this.showSearchResult} />
+            <Container fluid className="px-4">
+              <div className="d-flex justify-content-between">
+                <div className="d-flex">
+                  <h2 className="mb-4">TV Shows</h2>
+                  <div className="ml-4 mt-1">
+                    <Dropdown>
+                      <Dropdown.Toggle
+                        style={{ backgroundColor: "#221f1f" }}
+                        id="dropdownMenuButton"
+                        className="btn-secondary btn-sm dropdown-toggle rounded-0"
+                      >
+                        Genres
+                    </Dropdown.Toggle>
+                      <Dropdown.Menu bg="dark">
+                        <Dropdown.Item href="#/action-1">Comedy</Dropdown.Item>
+                        <Dropdown.Item href="#/action-2">Drama</Dropdown.Item>
+                        <Dropdown.Item href="#/action-3">Thriller</Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </div>
+                </div>
+                <div>
+                  <i className="fa fa-th-large icons"></i>
+                  <i className="fa fa-th icons"></i>
+                </div>
+              </div>
+              {this.state.error && (
+                <Alert variant="danger" className="text-center">
+                  An error has occurred, please try again later
+                </Alert>
+              )}
+              {this.state.searchedMovies.length > 0 && (
+                <Route path="/" exact>
+
+                  <Gallery
+                    title="Search results"
+                    movies={this.state.searchedMovies}
+                  />
+                </Route>
+              )}
+              {!this.state.error && !this.state.searchedMovies.length > 0 && (
+                <>
+                  <Route path="/" exact render={() =>
+                    <Gallery
+                      title="Harry Potter"
+                      loading={this.state.loading}
+                      movies={this.state.harryPotterMovies.slice(0, 6)}
+                      props={this.props}
+                    />
+                  }>
+                  </Route>
+                  <Route path="/" exact render={() =>
+                    <Gallery
+                      title="Spider Man"
+                      loading={this.state.loading}
+                      movies={this.state.spiderManMovies.slice(0, 6)}
+                      props={this.props}
+                    />
+                  }>
+                  </Route>
+                  <Route path="/" exact render={() =>
+                    <Gallery
+                      title="Star Wars"
+                      loading={this.state.loading}
+                      movies={this.state.starWarsMovies.slice(0, 6)}
+                      props={this.props}
+                    />
+                  }>
+
+
+                  </Route>
+                </>
+              )}
+              <Footer />
+            </Container>
+          </div>
+        </div>
+
+      </Router>
+    );
+  }
+}
+
+export default App;
