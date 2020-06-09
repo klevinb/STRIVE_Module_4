@@ -4,17 +4,9 @@ import items from "../data/menu.json";
 import DishComments from "./DishComments";
 
 class Home extends Component {
-  constructor(params) {
-    super(params);
-    // initializing the state on page refresh
-    this.state = {
-      selectedDish: null,
-    };
-  }
-
   selectNewDish = (dish) => {
     console.log("Dish selected", dish);
-    this.setState({ selectedDish: dish });
+    this.props.history.push('/details/' + dish.id)
   };
 
   render() {
@@ -40,11 +32,6 @@ class Home extends Component {
                 );
               })}
             </Carousel>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={8} className="text-center ml-auto mr-auto">
-            <DishComments selectedDish={this.state.selectedDish} />
           </Col>
         </Row>
       </Container>

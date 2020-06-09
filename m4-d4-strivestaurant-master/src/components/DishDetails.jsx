@@ -6,6 +6,7 @@ import DishComments from './DishComments'
 class DishDetails extends Component {
     state = {
         dish: null,
+        loading: true
     }
 
     componentDidMount = () => {
@@ -14,7 +15,8 @@ class DishDetails extends Component {
         const dish = dishes.find(dish => dish.id.toString() === dishId)
 
         this.setState({
-            dish
+            dish,
+            loading: false
         });
         console.log('Dish =>', dish)
     }
@@ -25,7 +27,7 @@ class DishDetails extends Component {
                 {console.log("dish props ", this.state.dish)}
                 <Row>
                     <Col>
-                        {!this.state.dish && <h1>LOADING!!!</h1>}
+                        {this.state.loading && <h1>LOADING!!!</h1>}
                         {this.state.dish &&
                             <Row className="mt-4 mb-2">
                                 <Col md={3}>
