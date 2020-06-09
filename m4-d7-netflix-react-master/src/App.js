@@ -59,7 +59,6 @@ class App extends Component {
 
       <Router>
         <div className="App">
-          {console.log("APP PROPS", this.props)}
           <div>
             <Navbar showSearchResult={this.showSearchResult} />
             <Container fluid className="px-4">
@@ -99,6 +98,7 @@ class App extends Component {
                   <Gallery
                     title="Search results"
                     movies={this.state.searchedMovies}
+                    props={this.props}
                   />
                 </Route>
               )}

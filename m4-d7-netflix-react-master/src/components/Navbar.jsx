@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Navbar, Nav, InputGroup, FormControl } from "react-bootstrap";
+import { Link } from 'react-router-dom'
 
 class NetflixNavbar extends Component {
   constructor(props) {
@@ -22,32 +23,34 @@ class NetflixNavbar extends Component {
     return (
 
       <Navbar variant="dark" expand="lg" style={{ backgroundColor: "#221f1f" }}>
-        {console.log("NAV BAR PROPS,", this.props)}
-        <Navbar.Brand href="/">
+        <Navbar.Brand>
           <img
             src="/assets/logo.png"
             alt="logo"
             style={{ width: "100px", height: "55px" }}
+            onClick={() => {
+              this.props.props.history.push("/")
+            }}
           />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link className="font-weight-bold" href="/">
+            <Link to={"/"} className="nav-link font-weight-bold">
               Home
-            </Nav.Link>
-            <Nav.Link active className="font-weight-bold" href="/">
+            </Link>
+            <Link to={"/"} className="nav-link font-weight-bold">
               TV Shows
-            </Nav.Link>
-            <Nav.Link className="font-weight-bold" href="/">
+            </Link>
+            <Link to={"/"} className="nav-link font-weight-bold">
               Movies
-            </Nav.Link>
-            <Nav.Link className="font-weight-bold" href="/">
+            </Link>
+            <Link to={"/"} className="nav-link font-weight-bold">
               Recently Added
-            </Nav.Link>
-            <Nav.Link className="font-weight-bold" href="/">
+            </Link>
+            <Link to={"/"} className="nav-link font-weight-bold">
               My List
-            </Nav.Link>
+            </Link>
           </Nav>
           <span className="d-none d-md-flex align-items-center">
             <InputGroup className="icons">
