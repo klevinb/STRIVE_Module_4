@@ -57,90 +57,87 @@ class App extends Component {
   render() {
     return (
 
-      <Router>
-        <div className="App">
-          <div>
-            <Navbar showSearchResult={this.showSearchResult} />
-            <Container fluid className="px-4">
-              <div className="d-flex justify-content-between">
-                <div className="d-flex">
-                  <h2 className="mb-4">TV Shows</h2>
-                  <div className="ml-4 mt-1">
-                    <Dropdown>
-                      <Dropdown.Toggle
-                        style={{ backgroundColor: "#221f1f" }}
-                        id="dropdownMenuButton"
-                        className="btn-secondary btn-sm dropdown-toggle rounded-0"
-                      >
-                        Genres
+      <div className="App">
+        <div>
+          <Navbar showSearchResult={this.showSearchResult} />
+          <Container fluid className="px-4">
+            <div className="d-flex justify-content-between">
+              <div className="d-flex">
+                <h2 className="mb-4">TV Shows</h2>
+                <div className="ml-4 mt-1">
+                  <Dropdown>
+                    <Dropdown.Toggle
+                      style={{ backgroundColor: "#221f1f" }}
+                      id="dropdownMenuButton"
+                      className="btn-secondary btn-sm dropdown-toggle rounded-0"
+                    >
+                      Genres
                     </Dropdown.Toggle>
-                      <Dropdown.Menu bg="dark">
-                        <Dropdown.Item href="#/action-1">Comedy</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">Drama</Dropdown.Item>
-                        <Dropdown.Item href="#/action-3">Thriller</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </div>
-                </div>
-                <div>
-                  <i className="fa fa-th-large icons"></i>
-                  <i className="fa fa-th icons"></i>
+                    <Dropdown.Menu bg="dark">
+                      <Dropdown.Item href="#/action-1">Comedy</Dropdown.Item>
+                      <Dropdown.Item href="#/action-2">Drama</Dropdown.Item>
+                      <Dropdown.Item href="#/action-3">Thriller</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
                 </div>
               </div>
-              {this.state.error && (
-                <Alert variant="danger" className="text-center">
-                  An error has occurred, please try again later
-                </Alert>
-              )}
-              {this.state.searchedMovies.length > 0 && (
-                <Route path="/" exact>
-
-                  <Gallery
-                    title="Search results"
-                    movies={this.state.searchedMovies}
-                    props={this.props}
-                  />
-                </Route>
-              )}
-              {!this.state.error && !this.state.searchedMovies.length > 0 && (
-                <>
-                  <Route path="/" exact render={() =>
-                    <Gallery
-                      title="Harry Potter"
-                      loading={this.state.loading}
-                      movies={this.state.harryPotterMovies.slice(0, 6)}
-                      props={this.props}
-                    />
-                  }>
-                  </Route>
-                  <Route path="/" exact render={() =>
-                    <Gallery
-                      title="Spider Man"
-                      loading={this.state.loading}
-                      movies={this.state.spiderManMovies.slice(0, 6)}
-                      props={this.props}
-                    />
-                  }>
-                  </Route>
-                  <Route path="/" exact render={() =>
-                    <Gallery
-                      title="Star Wars"
-                      loading={this.state.loading}
-                      movies={this.state.starWarsMovies.slice(0, 6)}
-                      props={this.props}
-                    />
-                  }>
+              <div>
+                <i className="fa fa-th-large icons"></i>
+                <i className="fa fa-th icons"></i>
+              </div>
+            </div>
+            {this.state.error && (
+              <Alert variant="danger" className="text-center">
+                An error has occurred, please try again later
+              </Alert>
+            )}
+            {this.state.searchedMovies.length > 0 && (
 
 
-                  </Route>
+              <Gallery
+                title="Search results"
+                movies={this.state.searchedMovies}
+                props={this.props}
+              />
+
+            )}
+            {!this.state.error && !this.state.searchedMovies.length > 0 && (
+              <>
+
+                <Gallery
+                  title="Harry Potter"
+                  loading={this.state.loading}
+                  movies={this.state.harryPotterMovies.slice(0, 6)}
+                  props={this.props}
+                />
+                  }>
+
+                    <Gallery
+                  title="Spider Man"
+                  loading={this.state.loading}
+                  movies={this.state.spiderManMovies.slice(0, 6)}
+                  props={this.props}
+                />
+                  }>
+
+                    <Gallery
+                  title="Star Wars"
+                  loading={this.state.loading}
+                  movies={this.state.starWarsMovies.slice(0, 6)}
+                  props={this.props}
+                />
+                  }>
+
+
+
                 </>
-              )}
-              <Footer />
-            </Container>
-          </div>
+            )}
+            <Footer />
+          </Container>
         </div>
+      </div>
 
-      </Router>
+
     );
   }
 }
