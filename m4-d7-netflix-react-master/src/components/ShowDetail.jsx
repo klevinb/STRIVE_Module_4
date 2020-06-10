@@ -181,7 +181,7 @@ class ShowDetail extends Component {
                     <Modal.Body>
                         <div className="my-3">
                             {this.state.selected &&
-                                <CommentList deleteComment={this.deleteComment} editComment={this.editComment} id={this.state.newComment.elementId} />
+                                <CommentList loading={this.state.loading} deleteComment={this.deleteComment} editComment={this.editComment} id={this.state.newComment.elementId} />
                             }
                             <div className="d-flex justify-content-center mt-3">
                                 <Button onClick={() => {

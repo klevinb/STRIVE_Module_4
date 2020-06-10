@@ -24,22 +24,24 @@ class CommentList extends React.Component {
 
   render() {
     return (
-      this.state.comments.map((comment) => (
-        <ListGroup key={comment._id}>
-          <ListGroup.Item className="d-flex justify-content-between">
-            <div>
-              <Badge pill variant="info" className="mr-3">
-                {comment.rate}
-              </Badge>
-              {comment.comment}
-            </div>
-            <div>
-              <Button variant="danger" onClick={() => this.props.deleteComment(comment._id)}>Delete</Button>
-              <Button variant="warning" onClick={() => this.props.editComment(comment._id)}>Edit</Button>
-            </div>
-          </ListGroup.Item>
-        </ListGroup>
-      ))
+      <>
+        {this.state.comments.map((comment) => (
+          <ListGroup key={comment._id}>
+            <ListGroup.Item className="d-flex justify-content-between">
+              <div>
+                <Badge pill variant="info" className="mr-3">
+                  {comment.rate}
+                </Badge>
+                {comment.comment}
+              </div>
+              <div>
+                <Button variant="danger" onClick={() => this.props.deleteComment(comment._id)}>Delete</Button>
+                <Button variant="warning" onClick={() => this.props.editComment(comment._id)}>Edit</Button>
+              </div>
+            </ListGroup.Item>
+          </ListGroup>
+        ))}
+      </>
     )
 
 
