@@ -11,10 +11,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Navbar />
+        <Navbar props={this.props} />
         <Container>
           <Jumbotron />
-          <Latestrelease />
+          <Latestrelease props={this.props} />
         </Container>
         <Footer />
       </div>

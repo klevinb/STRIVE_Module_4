@@ -1,9 +1,9 @@
 import React from 'react'
-import {Jumbotron, Button} from 'react-bootstrap'
+import { Jumbotron, Button } from 'react-bootstrap'
 import logo from '../assets/logo.png'
 import './MainCss.css'
 
-const myJumbotron = () =>{
+const myJumbotron = () => {
     return (
         <Jumbotron>
             <div>
@@ -16,7 +16,7 @@ const myJumbotron = () =>{
                 </p>
             </div>
             <div>
-                <img src={logo} />
+                <img src={logo} alt="logo" />
             </div>
         </Jumbotron>
     )

@@ -4,11 +4,16 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import BookDetails from './components/BookDetails'
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <Router>
+    <Route path="/" exact component={App}></Route>
+    <Route path="/details/:category/:id" component={BookDetails}></Route>
+  </Router>,
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 

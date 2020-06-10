@@ -4,7 +4,6 @@ import { Container, Alert, Dropdown } from "react-bootstrap";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Gallery from "./components/Gallery";
-import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 class App extends Component {
   constructor(props) {
@@ -110,27 +109,20 @@ class App extends Component {
                   movies={this.state.harryPotterMovies.slice(0, 6)}
                   props={this.props}
                 />
-                  }>
 
-                    <Gallery
+                <Gallery
                   title="Spider Man"
                   loading={this.state.loading}
                   movies={this.state.spiderManMovies.slice(0, 6)}
                   props={this.props}
                 />
-                  }>
-
-                    <Gallery
+                <Gallery
                   title="Star Wars"
                   loading={this.state.loading}
                   movies={this.state.starWarsMovies.slice(0, 6)}
                   props={this.props}
                 />
-                  }>
-
-
-
-                </>
+              </>
             )}
             <Footer />
           </Container>

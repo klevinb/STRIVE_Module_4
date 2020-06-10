@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import Navbar from './Navbar'
-import { Container, Row, Col, Form, Button } from 'react-bootstrap'
+import { Container, Row, Col, Form, Button, Table } from 'react-bootstrap'
 
 class Register extends Component {
 
     state = {
+        showUser: false,
         show: false,
         person: {
             name: '',
@@ -20,17 +21,24 @@ class Register extends Component {
 
     componentDidUpdate = () => {
         if (
+            this.state.show === false &&
             this.state.person.name.length > 2 &&
             this.state.person.surname.length > 3 &&
-            this.state.person.email.indexOf("@") !== -1 &&
+            this.state.person.email.includes("@") &&
             this.state.person.password.length >= 8 &&
-            this.state.person.birthDay.getFullYear() > 1910 &&
-            this.state.person.postalCode.length > 5
+            this.state.person.postalCode.length >= 5
         ) {
             this.setState({
                 show: !this.state.show
             });
         }
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault()
+        this.setState({
+            showUser: !this.state.showUser
+        });
     }
 
     updatePerson = (event) => {
@@ -46,11 +54,12 @@ class Register extends Component {
         return (
             <div>
                 <Navbar props={this.props} register={true} />
+
                 <Container>
                     <Row className="d-flex justfify-content-center">
                         <Col md={6} className="offset-3">
                             <h1 className="text-center">Register</h1>
-                            <Form>
+                            <Form onSubmit={this.handleSubmit}>
                                 <Row>
                                     <Col>
                                         <Form.Group>
@@ -160,14 +169,54 @@ class Register extends Component {
                                 </Row>
                                 {this.state.show &&
                                     <Button className="offset-5" variant="primary" type="submit">
-                                        Submit
+                                        Register
                                     </Button>
                                 }
                             </Form>
                         </Col>
                     </Row>
+                    {this.state.showUser ?
+                        <>
+                            <Row className="d-flex justfify-content-center mt-3">
+                                <Col>
+                                    <Table striped bordered hover variant="dark">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Surname</th>
+                                                <th>Email</th>
+                                                <th>Password</th>
+                                                <th>Birthday</th>
+                                                <th>Street Address</th>
+                                                <th>City</th>
+                                                <th>Postalcode</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>{this.state.person.name}</td>
+                                                <td>{this.state.person.surname}</td>
+                                                <td>{this.state.person.email}</td>
+                                                <td>{this.state.person.password}</td>
+                                                <td>{this.state.person.birthDay}</td>
+                                                <td>{this.state.person.streetAddress}</td>
+                                                <td>{this.state.person.city}</td>
+                                                <td>{this.state.person.postalCode}</td>
+                                            </tr>
+                                        </tbody>
+                                    </Table>
+                                </Col>
+                            </Row>
+                        </>
+                        :
+                        <Row className="d-flex justfify-content-center">
+                            <Col className="text-center" >
+                                <p>No users to display</p>
+                            </Col>
+                        </Row>
+                    }
                 </Container>
-            </div>
+            </div >
         );
     }
 }

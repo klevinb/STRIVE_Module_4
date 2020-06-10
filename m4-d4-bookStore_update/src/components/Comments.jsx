@@ -5,33 +5,7 @@ import AddComments from './AddComments'
 class Comments extends Component {
 
     state = {
-        book_id: this.props.id,
         comments: [],
-        editElement: null
-    }
-
-    deleteComment = async (id) => {
-        try {
-            let response = await fetch("https://striveschool.herokuapp.com/api/comments/" + id, {
-                method: "DELETE",
-                headers: {
-                    'Authorization': 'Basic ' + btoa("user16:c9WEUxMS294hN6fF")
-                }
-            })
-            if (response.ok) {
-                alert("You deleted a comment!")
-            } else {
-                alert("Something went wrong!")
-            }
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
-    editComment = async (id) => {
-        this.setState({
-            editElement: id
-        });
     }
 
     filteredComments = async (event) => {
@@ -47,18 +21,17 @@ class Comments extends Component {
         }
     }
 
+
     componentDidMount = async () => {
         try {
-            let response = await fetch("https://striveschool.herokuapp.com/api/comments/" + this.state.book_id, {
+            let response = await fetch("https://striveschool.herokuapp.com/api/comments/" + this.props.id, {
                 headers: {
                     'Authorization': 'Basic ' + btoa("user16:c9WEUxMS294hN6fF")
                 }
             })
             let comments = await response.json()
 
-            if (comments.length === 0) {
-                alert("There are no comments for this book!")
-            } else {
+            if (response.ok) {
                 this.setState({
                     comments
                 });
@@ -68,13 +41,11 @@ class Comments extends Component {
         }
     }
 
-
-
     render() {
         return (
 
             <>
-                {this.state.comments.length > 0 &&
+                {this.state.comments.length > 0 ?
                     <ListGroup>
                         <Form className="mt-3" inline>
                             <FormControl type="text" placeholder="Search" onChange={(e) => this.filteredComments(e.target.value)} className="mr-sm-2" />
@@ -97,7 +68,7 @@ class Comments extends Component {
                             }
                             return (
 
-                                <ListGroup.Item className="mt-3">
+                                <ListGroup.Item key={comment._id} className="mt-3">
                                     {comment.comment} <br></br> <Badge variant={variant}>{comment.rate}</Badge>
                                     <div>
                                         <Button variant="danger" className="mr-2" onClick={() => this.deleteComment(comment._id)}>Delete</Button>
@@ -107,16 +78,10 @@ class Comments extends Component {
                             )
                         })}
                     </ListGroup>
+                    :
+                    <p>No comments</p>
+
                 }
-                {this.state.comments && this.state.comments.map((comment) => {
-                    return (
-                        <>
-                            {this.state.editElement &&
-                                <AddComments editId={comment._id} />
-                            }
-                        </>
-                    )
-                })}
             </>
         )
     }

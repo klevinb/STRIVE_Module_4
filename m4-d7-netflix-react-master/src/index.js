@@ -13,7 +13,7 @@ ReactDOM.render(
   <Router>
     <Route path="/" exact component={App}></Route>
     <Route path="/details/:id" component={ShowDetail}></Route>
-    <Route path="/register/" component={Register}></Route>
+    <Route path="/register/" exact component={Register}></Route>
   </Router>,
   // </React.StrictMode>,
   document.getElementById("root")

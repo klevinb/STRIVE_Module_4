@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Col } from "react-bootstrap";
-import { Link } from 'react-router-dom'
+
 
 class Movie extends Component {
   render() {

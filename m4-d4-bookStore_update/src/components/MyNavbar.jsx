@@ -1,19 +1,27 @@
 import React, { Component } from 'react'
-import {Navbar, Nav} from 'react-bootstrap'
+import { Navbar, Nav } from 'react-bootstrap'
 import logo from '../assets/navbar_logo.png'
+import { Link } from 'react-router-dom'
 
 class NavBar extends Component {
-    render(){
-        return(
+    render() {
+        return (
             <>
-            <Navbar bg="dark" variant="dark">
-                <Navbar.Brand href="#home"><img src={logo} width="120px" /></Navbar.Brand>
-                <Nav className="mr-auto">
-                <Nav.Link href="#home">Home</Nav.Link>
-                <Nav.Link href="#about">About</Nav.Link>
-                <Nav.Link href="#browse">Browse</Nav.Link>
-                </Nav>
-            </Navbar>
+                <Navbar bg="dark" variant="dark">
+                    <Navbar.Brand href="#home"><img src={logo} alt="logo" width="120px" /></Navbar.Brand>
+                    <Nav className="mr-auto">
+                        <Link to="/" className="nav-link">
+                            Home
+                        </Link>
+                        <Link to="/about" className="nav-link">
+                            About
+                        </Link>
+                        <Link to="/browse" className="nav-link">
+                            Browse
+                        </Link>
+
+                    </Nav>
+                </Navbar>
             </>
         )
     }
