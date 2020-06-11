@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Dropdown, Spinner } from 'react-bootstrap'
+import { Container, Row, Col, Dropdown, Spinner, Alert } from 'react-bootstrap'
 import Gallery from './Gallery'
 
 
@@ -8,28 +8,54 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            displayGalery: false,
+            transformers: [],
+            deadpool: [],
+            spiderman: [],
+            err: false,
+            loading: true,
         };
     }
-
+    url = "http://www.omdbapi.com/?apikey=71eeae0a";
     componentDidMount = () => {
-        setTimeout(() => this.setState({
-            displayGalery: !this.state.displayGalery
-        }), 1000)
-    }
+        Promise.all(
+            [
+                fetch(this.url + "&s=transformers")
+                    .then((response) => response.json())
+                    .then(responseObject => this.setState({
+                        transformers: responseObject.Search,
+                    })
+                    ),
+                fetch(this.url + "&s=deadpool")
+                    .then((response) => response.json())
+                    .then(responseObject => this.setState({
+                        deadpool: responseObject.Search,
+                    })
+                    ),
+                fetch(this.url + "&s=spider%20man")
+                    .then((response) => response.json())
+                    .then(responseObject => this.setState({
+                        spiderman: responseObject.Search,
+                    })
+                    ),
+            ]
+        )
+            .then(() => this.setState({
+                loading: !this.state.loading
+            }))
+            .catch(err => {
+                this.setState({
+                    err: true,
+                })
+                console.log("An error has occurred:", err)
+            }
+            )
 
-    componentDidUpdate = () => {
-        if (this.state.displayGalery === true) {
-            setTimeout(() => this.setState({
-                displayGalery: !this.state.displayGalery
-            }), 4000)
-        }
     }
 
     render() {
         return (
             <Container fluid className="px-4" >
-                <Row className="justify-content-between mb-4">
+                <Row className="justify-content-between mb-6">
                     <Col className="d-flex align-items-center">
                         <h2 className="mb-0">TV Shows</h2>
                         <Dropdown>
@@ -56,16 +82,18 @@ class Home extends Component {
 
                     </div>
                 </Row>
-                {this.state.displayGalery ?
+
+                {!this.state.err ?
                     <>
-                        <Gallery title={"Trending Now"} />
-                        <Gallery title={"Action"} imageSrc={"/images/image3.jpg"} />
-                        <Gallery title={"Drama"} imageSrc={"/images/image5.jpg"} />
+                        <Gallery loading={this.state.loading} title={"Spiderman"} movies={this.state.spiderman} />
+                        <Gallery loading={this.state.loading} title={"Transformers"} movies={this.state.transformers} />
+                        <Gallery loading={this.state.loading} title={"DeadPool"} movies={this.state.deadpool} />
                     </>
                     :
                     <>
-                        <Spinner animation="grow" variant="light" size="sm" />
-                        <Spinner animation="grow" variant="light" />
+                        <Alert variant="danger">
+                            Please try again Later
+                        </Alert>
                     </>
                 }
             </Container>
