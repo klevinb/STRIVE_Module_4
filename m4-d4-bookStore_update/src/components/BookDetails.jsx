@@ -18,8 +18,9 @@ class BookDetails extends Component {
 
     state = {
         addComment: false,
-        newComment: '',
-        showModal: true,
+        showEditForm: false,
+        editComment: '',
+        showModal: false,
         selectedElement: null,
         book: null,
         newComment: {
@@ -50,6 +51,55 @@ class BookDetails extends Component {
         this.setState({ newComment });
     };
 
+    deleteComment = async (id) => {
+        let response = await fetch("https://striveschool.herokuapp.com/api/comments/" + id, {
+            method: "DELETE",
+            headers: {
+                'Authorization': 'Basic ' + btoa("user16:c9WEUxMS294hN6fF"),
+                'Content-Type': 'application/json'
+            }
+        })
+        if (response.ok) {
+            alert("Comment was dellted!")
+            this.setState({
+                showModal: !this.state.showModal
+            });
+        }
+    }
+
+    editComment = async (id) => {
+        this.setState({
+            editComment: id,
+            showEditForm: !this.state.showEditForm
+        });
+
+    }
+
+    editCommentFunction = async (e) => {
+        e.preventDefault()
+        let response = await fetch("https://striveschool.herokuapp.com/api/comments/" + this.state.editComment, {
+            method: "PUT",
+            body: JSON.stringify(this.state.newComment),
+            headers: {
+                'Authorization': 'Basic ' + btoa("user16:c9WEUxMS294hN6fF"),
+                'Content-Type': 'application/json'
+            }
+        })
+        if (response.ok) {
+            alert("The comment was edited!")
+            this.setState({
+                newComment: {
+                    comment: "",
+                    rate: 0,
+                    elementId: this.props.match.params.id,
+                },
+                showModal: !this.state.showModal,
+                showEditForm: !this.state.showEditForm
+            });
+        }
+
+    }
+
     submitComment = async (e) => {
         e.preventDefault()
 
@@ -64,6 +114,15 @@ class BookDetails extends Component {
             })
             if (response.ok) {
                 alert("Your comment was successfuly added!")
+                this.setState({
+                    newComment: {
+                        comment: "",
+                        rate: 0,
+                        elementId: this.props.match.params.id,
+                    },
+                    addComment: !this.state.addComment,
+                    showModal: !this.state.showModal,
+                });
             } else {
                 alert("Something went wrong!")
             }
@@ -85,7 +144,8 @@ class BookDetails extends Component {
                                         <Image src={this.state.book[0].img}
                                             fluid
                                             onClick={() => this.setState({
-                                                selectedElement: this.state.newComment.elementId
+                                                selectedElement: this.state.newComment.elementId,
+                                                showModal: !this.state.showModal
                                             })}
                                         />
                                     </Col>
@@ -102,7 +162,10 @@ class BookDetails extends Component {
                             {this.state.selectedElement &&
                                 <Modal className="modal_color"
                                     show={this.state.showModal}
-                                    onHide={() => this.setState({ selectedElement: !this.state.showModal })}
+                                    onHide={() => this.setState({
+                                        selectedElement: !this.state.showModal,
+                                        addComment: false
+                                    })}
                                 >
                                     <Modal.Header closeButton>
                                         <Modal.Title>Movie comments</Modal.Title>
@@ -110,7 +173,7 @@ class BookDetails extends Component {
                                     <Modal.Body>
                                         <div className="my-3">
                                             {this.state.selectedElement &&
-                                                <Comments id={this.state.selectedElement} />
+                                                <Comments deleteComment={this.deleteComment} editComment={this.editComment} id={this.state.selectedElement} />
                                             }
                                             <div className="d-flex justify-content-center mt-3">
                                                 <Button onClick={() => {
@@ -180,7 +243,7 @@ class BookDetails extends Component {
                                                     </Form>
                                                 </div>
                                             }
-                                            {this.state.editComment &&
+                                            {this.state.showEditForm &&
                                                 <div className="text-center">
                                                     <h5 className="my-3">Edit this Comment</h5>
                                                     <Form onSubmit={this.editCommentFunction}>
@@ -237,7 +300,7 @@ class BookDetails extends Component {
                                                         </InputGroup>
                                                         <Button variant="primary" type="submit">
                                                             Edit
-                                        </Button>
+                                                        </Button>
                                                     </Form>
                                                 </div>
                                             }
@@ -249,7 +312,6 @@ class BookDetails extends Component {
                     </Container>
                 </Container>
                 <Footer />
-                {console.log(this.state.book)}
             </>
         );
     }

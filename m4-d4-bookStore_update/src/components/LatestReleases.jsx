@@ -70,7 +70,7 @@ class Latestrelease extends Component {
               );
             })}
         </div>
-        <Button variant="dark" onClick={this.increaseSize}>
+        <Button variant="dark" className="mb-4" onClick={this.increaseSize}>
           Show more books
         </Button>
       </>

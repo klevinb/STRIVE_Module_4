@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { ListGroup, Button, Form, FormControl, Badge } from 'react-bootstrap'
-import AddComments from './AddComments'
 
 class Comments extends Component {
 
@@ -45,11 +44,11 @@ class Comments extends Component {
         return (
 
             <>
+                <Form className="mt-3" inline>
+                    <FormControl type="text" placeholder="Search" onChange={(e) => this.filteredComments(e.target.value)} className="mr-sm-2" />
+                </Form>
                 {this.state.comments.length > 0 ?
                     <ListGroup>
-                        <Form className="mt-3" inline>
-                            <FormControl type="text" placeholder="Search" onChange={(e) => this.filteredComments(e.target.value)} className="mr-sm-2" />
-                        </Form>
                         {this.state.comments && this.state.comments.map((comment) => {
                             let variant = "";
                             switch (comment.rate) {
@@ -69,10 +68,15 @@ class Comments extends Component {
                             return (
 
                                 <ListGroup.Item key={comment._id} className="mt-3">
-                                    {comment.comment} <br></br> <Badge variant={variant}>{comment.rate}</Badge>
-                                    <div>
-                                        <Button variant="danger" className="mr-2" onClick={() => this.deleteComment(comment._id)}>Delete</Button>
-                                        <Button variant="warning" onClick={() => this.editComment(comment._id)}>Edit</Button>
+                                    <div className="d-flex justify-content-between">
+                                        <div>
+                                            {comment.comment} <br></br> <Badge variant={variant}>{comment.rate}</Badge>
+
+                                        </div>
+                                        <div>
+                                            <Button variant="danger" className="mr-2" onClick={() => this.props.deleteComment(comment._id)}>Delete</Button>
+                                            <Button variant="warning" onClick={() => this.props.editComment(comment._id)}>Edit</Button>
+                                        </div>
                                     </div>
                                 </ListGroup.Item>
                             )
