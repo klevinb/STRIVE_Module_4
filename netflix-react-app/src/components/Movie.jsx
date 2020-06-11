@@ -5,7 +5,7 @@ function Movie(props) {
     return (
         <Col>
             {props.src ?
-                <Image fluid src={props.src} />
+                <Image fluid src={props.src.Poster} />
                 :
                 <Image fluid src="/images/image1.jpg" />
             }
