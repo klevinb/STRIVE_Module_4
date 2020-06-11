@@ -11,13 +11,12 @@ function Gallery(props) {
                 {props.loading ?
                     [1, 2, 3, 4, 5, 6].map((num) =>
                         <Col>
-                            <Spinner animation="grow" variant="light" />
-                            <Spinner animation="grow" variant="light" size="sm" />
+                            <Spinner key={num} animation="grow" variant="light" />
                         </Col>
                     )
                     :
                     props.movies.slice(0, 6).map((movie) =>
-                        <Movie src={movie} title={movie.Title} />
+                        <Movie key={movie.imdbID} comments={props.comments} fetchComments={props.fetchComments} src={movie} title={movie.Title} />
                     )
                 }
             </Row>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Dropdown, Spinner, Alert } from 'react-bootstrap'
+import { Container, Row, Col, Dropdown, Alert } from 'react-bootstrap'
 import Gallery from './Gallery'
 
 
@@ -13,6 +13,7 @@ class Home extends Component {
             spiderman: [],
             err: false,
             loading: true,
+            comments: [],
         };
     }
     url = "http://www.omdbapi.com/?apikey=71eeae0a";
@@ -52,6 +53,20 @@ class Home extends Component {
 
     }
 
+    fetchComments = async (movieId) => {
+        const commentsUrl = "https://striveschool.herokuapp.com/api/comments/";
+        const comments = await fetch(commentsUrl + movieId, {
+            headers: new Headers({
+                'Authorization': 'Basic ' + btoa("user16:c9WEUxMS294hN6fF"),
+            }),
+        })
+            .then((resp) => resp.json())
+
+        this.setState({
+            comments
+        });
+    }
+
     render() {
         return (
             <Container fluid className="px-4" >
@@ -82,12 +97,11 @@ class Home extends Component {
 
                     </div>
                 </Row>
-
                 {!this.state.err ?
                     <>
-                        <Gallery loading={this.state.loading} title={"Spiderman"} movies={this.state.spiderman} />
-                        <Gallery loading={this.state.loading} title={"Transformers"} movies={this.state.transformers} />
-                        <Gallery loading={this.state.loading} title={"DeadPool"} movies={this.state.deadpool} />
+                        <Gallery comments={this.state.comments} fetchComments={this.fetchComments} loading={this.state.loading} title={"Spiderman"} movies={this.state.spiderman} />
+                        <Gallery comments={this.state.comments} fetchComments={this.fetchComments} loading={this.state.loading} title={"Transformers"} movies={this.state.transformers} />
+                        <Gallery comments={this.state.comments} fetchComments={this.fetchComments} loading={this.state.loading} title={"DeadPool"} movies={this.state.deadpool} />
                     </>
                     :
                     <>
@@ -96,7 +110,7 @@ class Home extends Component {
                         </Alert>
                     </>
                 }
-            </Container>
+            </Container >
         );
     }
 }

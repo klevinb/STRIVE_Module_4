@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Card, Button } from "react-bootstrap";
+import Jumbotron from './Jumbotron'
+import { Container } from 'react-bootstrap'
 
 const categories = ["history", "romance", "horror", "scifi", "fantasy"]
 
@@ -32,7 +34,7 @@ class Latestrelease extends Component {
   };
 
   bookDetails = (event) => {
-    this.props.props.history.push("/details/" + this.state.categoryName + "/" + event.currentTarget.closest("div").id)
+    this.props.history.push("/details/" + this.state.categoryName + "/" + event.currentTarget.closest("div").id)
   }
 
 
@@ -40,6 +42,7 @@ class Latestrelease extends Component {
   render() {
     return (
       <>
+        <Jumbotron />
         <select onChange={this.categoryPicker}>
           {console.log("Latest releases props", this.props.props)}
 

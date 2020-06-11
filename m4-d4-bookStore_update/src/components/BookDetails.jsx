@@ -134,8 +134,7 @@ class BookDetails extends Component {
     render() {
         return (
             <>
-                <Navbar />
-                <Container fluid className="mt-0 pb-4" id="bookDetails">
+                <Container fluid className="mt-0 pb-4" style={{ height: "100vh" }} id="bookDetails">
                     <Container>
                         <>
                             {this.state.book &&
@@ -311,7 +310,6 @@ class BookDetails extends Component {
                         </>
                     </Container>
                 </Container>
-                <Footer />
             </>
         );
     }

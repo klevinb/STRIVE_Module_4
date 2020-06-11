@@ -50,9 +50,7 @@ class Register extends Component {
     render() {
         return (
             <div>
-                <Navbar props={this.props} register={true} />
-
-                <Container>
+                <Container style={{ height: "100vh" }}>
                     <Row className="d-flex justfify-content-center">
                         <Col md={6} className="offset-3">
                             <h1 className="text-center">Register</h1>
