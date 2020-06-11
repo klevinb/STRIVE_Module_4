@@ -19,26 +19,56 @@ class Register extends Component {
         }
     }
 
-    componentDidUpdate = () => {
-        if (
-            this.state.show === false &&
-            this.state.person.name.length > 2 &&
-            this.state.person.surname.length > 3 &&
-            this.state.person.email.includes("@") &&
-            this.state.person.password.length >= 8 &&
-            this.state.person.postalCode.length >= 5
-        ) {
-            this.setState({
-                show: !this.state.show
-            });
-        }
+    // componentDidUpdate = () => {
+    //     if (
+    //         this.state.show === false &&
+    //         this.state.person.name.length > 2 &&
+    //         this.state.person.surname.length > 3 &&
+    //         this.state.person.email.includes("@") &&
+    //         this.state.person.password.length >= 8 &&
+    //         this.state.person.postalCode.length >= 5
+    //     ) {
+    //         this.setState({
+    //             show: !this.state.show
+    //         });
+    //     }
+    // }
+
+    // You can do it in HTML5 using required + pattern => please do it!
+    // You can add in react some fields that are displayed with conditional rendering when a field doesn'0t match the specified condition
+    // Usually for this we use regex
+
+    validateEmail = (email) => {
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+
+    validatePass = (pass) => {
+        const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+        return re.test(String(pass))
     }
 
     handleSubmit = (e) => {
         e.preventDefault()
+
+        if (this.state.person.name.length < 3) {
+            console.log("Name too short")
+            return;
+        }
+
         this.setState({
             showUser: !this.state.showUser
         });
+    }
+
+    getFullYear = (date) => {
+        const year = new Date(date).getFullYear()
+
+        if (year < 1911) {
+            return false
+        } else {
+            return true
+        }
     }
 
     updatePerson = (event) => {
@@ -72,6 +102,7 @@ class Register extends Component {
                                                 onChange={this.updatePerson}
                                                 required
                                             />
+                                            {this.state.person.name && this.state.person.name.length < 2 && <div className="errorMessage"> The name should have at least 2 chars</div>}
                                         </Form.Group>
                                     </Col>
                                     <Col>
@@ -85,6 +116,7 @@ class Register extends Component {
                                                 onChange={this.updatePerson}
                                                 required
                                             />
+                                            {this.state.person.surname && this.state.person.surname.length < 3 && <div className="errorMessage"> The surname should have at least 3 chars</div>}
                                         </Form.Group>
                                     </Col>
                                 </Row>
@@ -100,6 +132,7 @@ class Register extends Component {
                                                 onChange={this.updatePerson}
                                                 required
                                             />
+                                            {this.state.person.email && !this.validateEmail(this.state.person.email) && <div className="errorMessage">Email is not valid</div>}
                                         </Form.Group>
                                     </Col>
                                     <Col>
@@ -113,6 +146,8 @@ class Register extends Component {
                                                 onChange={this.updatePerson}
                                                 required
                                             />
+                                            {this.state.person.password && !this.validatePass(this.state.person.password) && <div className="errorMessage">Should contain at least 8 chars, 1 digit, 1 letter</div>}
+
                                         </Form.Group>
                                     </Col>
                                 </Row>
@@ -125,6 +160,7 @@ class Register extends Component {
                                         onChange={this.updatePerson}
                                         required
                                     />
+                                    {this.state.person.birthDay && !this.getFullYear(this.state.person.birthDay) && <div className="errorMessage">Year should be greater than 1910</div>}
                                 </Form.Group>
                                 <Row>
                                     <Col>
@@ -167,11 +203,11 @@ class Register extends Component {
                                         </Form.Group>
                                     </Col>
                                 </Row>
-                                {this.state.show &&
-                                    <Button className="offset-5" variant="primary" type="submit">
-                                        Register
+
+                                <Button className="offset-5" variant="primary" type="submit">
+                                    Register
                                     </Button>
-                                }
+
                             </Form>
                         </Col>
                     </Row>

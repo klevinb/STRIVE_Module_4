@@ -64,3 +64,17 @@ footer {
 .col img:hover {
   transform: scale(1.1);
 }
+
+.errorMessage{
+  color: red;
+}
+
+
+#email:focus+.errorMessage,
+#name:focus+.errorMessage,
+#surname:focus+.errorMessage,
+#password:focus+.errorMessage,
+#birthDay:focus+.errorMessage {
+  display:none;
+
+}
