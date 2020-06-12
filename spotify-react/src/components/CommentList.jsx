@@ -38,7 +38,7 @@ class CommentList extends React.Component {
                   {comment.comment}
                 </div>
                 <div>
-                  <Button variant="danger" onClick={() => this.props.deleteComment(comment._id)}>Delete</Button>
+                  <Button className="mr-2" variant="danger" onClick={() => this.props.deleteComment(comment._id)}>Delete</Button>
                   <Button variant="warning" onClick={() => this.props.editComment(comment._id)}>Edit</Button>
                 </div>
               </ListGroup.Item>
