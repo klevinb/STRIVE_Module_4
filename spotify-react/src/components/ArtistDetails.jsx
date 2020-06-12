@@ -50,19 +50,6 @@ class ArtistDetails extends Component {
     render() {
         return (
             <>
-                {this.state.loading &&
-                    <Col md={10} style={{ height: "90vh" }} className="col-10 gray-bg" >
-                        {console.log(this.props)}
-                        <Row className="row row-cols-xs-1" >
-                            <div id="content" className="col-12 col-md-4 d-flex justify-content-end">
-                                <Spinner className="align-self-center" animation="border" variant="light" />
-                            </div>
-                            <div id="songs" className="col pt-5">
-                                <Spinner className="align-self-center" animation="border" variant="light" />
-                            </div>
-                        </Row>
-                    </Col>
-                }
                 {this.state.artist &&
                     <Col md={10} className="col-10 gray-bg" >
                         <Row className="row row-cols-xs-1" >
@@ -91,6 +78,19 @@ class ArtistDetails extends Component {
                                     )
                                     }
                                 </div>
+                            </div>
+                        </Row>
+                    </Col>
+                }
+                {this.state.loading &&
+                    <Col md={10} style={{ height: "90vh" }} className="col-10 gray-bg" >
+                        {console.log(this.props)}
+                        <Row className="row row-cols-xs-1" >
+                            <div id="content" className="col-12 col-md-4 d-flex justify-content-end">
+                                <Spinner className="align-self-center" animation="border" variant="light" />
+                            </div>
+                            <div id="songs" className="col pt-5">
+                                <Spinner className="align-self-center" animation="border" variant="light" />
                             </div>
                         </Row>
                     </Col>

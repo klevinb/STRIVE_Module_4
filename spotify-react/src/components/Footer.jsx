@@ -7,7 +7,7 @@ function Footer(props) {
         <footer>
             <div style={{ display: 'flex', justifyContent: 'space-between' }} className="row light-gray-bg">
                 <div className="col-3 d-flex p-2 pl-2 align-center footer_hide">
-                    <Image id="songImg" src="" width="45px" height="45px" />
+                    <Image src="/assets/avatar.png" width="45px" height="45px" />
                     <div className="pb-0 mb-0">
                         <p id="songTitle" className="pl-3 p-0 m-0"></p>
                         <label id="artistName" className="pl-3 "></label>

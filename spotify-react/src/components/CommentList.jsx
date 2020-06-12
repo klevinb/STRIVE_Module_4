@@ -1,10 +1,11 @@
 import React from "react";
-import { Badge, ListGroup, Button } from "react-bootstrap";
+import { Badge, ListGroup, Button, Spinner } from "react-bootstrap";
 
 class CommentList extends React.Component {
 
   state = {
-    comments: []
+    comments: [],
+    loading: true
   }
 
   componentDidMount = async () => {
@@ -15,32 +16,43 @@ class CommentList extends React.Component {
       }),
     }).then((response) => response.json());
     this.setState({ comments });
-    console.log(this.state.comments)
-  }
-
-  componentWillUnmount() {
-    console.log("Bye Bye!")
+    if (this.state.comments.length === 0) {
+      setTimeout(() => this.setState({
+        loading: false
+      }), 1000)
+    }
   }
 
   render() {
     return (
       <>
-        {this.state.comments.map((comment) => (
-          <ListGroup key={comment._id}>
-            <ListGroup.Item className="d-flex justify-content-between">
-              <div>
-                <Badge pill variant="info" className="mr-3">
-                  {comment.rate}
-                </Badge>
-                {comment.comment}
-              </div>
-              <div>
-                <Button variant="danger" onClick={() => this.props.deleteComment(comment._id)}>Delete</Button>
-                <Button variant="warning" onClick={() => this.props.editComment(comment._id)}>Edit</Button>
-              </div>
-            </ListGroup.Item>
-          </ListGroup>
-        ))}
+        {this.state.comments.length > 0 && this.state.comments ?
+
+          this.state.comments.map((comment) => (
+            <ListGroup key={comment._id}>
+              <ListGroup.Item className="d-flex justify-content-between">
+                <div>
+                  <Badge pill variant="info" className="mr-3">
+                    {comment.rate}
+                  </Badge>
+                  {comment.comment}
+                </div>
+                <div>
+                  <Button variant="danger" onClick={() => this.props.deleteComment(comment._id)}>Delete</Button>
+                  <Button variant="warning" onClick={() => this.props.editComment(comment._id)}>Edit</Button>
+                </div>
+              </ListGroup.Item>
+            </ListGroup>
+          ))
+          :
+          <>
+            {this.state.loading ?
+              <Spinner className="align-self-center" animation="border" variant="dark" />
+              :
+              <p>There are no comments for this album</p>
+            }
+          </>
+        }
       </>
     )
 

@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import { Image, Col, Row, Spinner, Modal, Form, Button, FormControl, InputGroup } from 'react-bootstrap'
 import CommentList from './CommentList'
+import Song from './Song'
 import './MainCss.css'
+import { Link } from 'react-router-dom'
+
 const commentUrl = "https://striveschool.herokuapp.com/api/comments/"
 class AlbumDetails extends Component {
 
     state = {
         loading: true,
+        editElement: null,
+        editComment: false,
         showModal: false,
-        albumId: this.props.match.params.id,
         album: undefined,
         coments: [],
         addComment: false,
@@ -26,6 +30,58 @@ class AlbumDetails extends Component {
         });
     }
 
+    deleteComment = async (id) => {
+        const commentsUrl = "https://striveschool.herokuapp.com/api/comments/";
+        const response = await fetch(commentsUrl + id, {
+            method: "DELETE",
+            headers: new Headers({
+                'Authorization': 'Basic ' + btoa("user16:c9WEUxMS294hN6fF"),
+                "Content-Type": "application/json",
+            })
+        })
+        if (response.ok) {
+            alert("Comment Deleted!")
+            this.setState({
+                showModal: !this.state.showModal
+            });
+        }
+    }
+
+    editComment = async (id) => {
+        this.setState({
+            editElement: id,
+            editComment: !this.state.editComment,
+            addComment: false
+        });
+
+    }
+    editCommentFunction = async (e) => {
+        e.preventDefault();
+        const commentsUrl = "https://striveschool.herokuapp.com/api/comments/";
+        const response = await fetch(commentsUrl + this.state.editElement, {
+            method: "PUT",
+            body: JSON.stringify(this.state.newComment),
+            headers: new Headers({
+                'Authorization': 'Basic ' + btoa("user16:c9WEUxMS294hN6fF"),
+                "Content-Type": "application/json",
+            }),
+        });
+        if (response.ok) {
+            alert("Comment edited!");
+            this.setState({
+                showModal: !this.state.showModal,
+                editComment: !this.state.editComment,
+                newComment: {
+                    comment: "",
+                    rate: 0,
+                    elementId: this.props.match.params.id,
+                },
+            });
+        } else {
+            alert("An error has occurred");
+        }
+    };
+
     submitComment = async (e) => {
         e.preventDefault();
         const response = await fetch(commentUrl, {
@@ -39,7 +95,7 @@ class AlbumDetails extends Component {
         if (response.ok) {
             alert("Comment added");
             this.setState({
-                selected: !this.state.selected,
+                showModal: !this.state.showModal,
                 addComment: !this.state.addComment,
                 newComment: {
                     comment: "",
@@ -64,7 +120,7 @@ class AlbumDetails extends Component {
 
     componentDidMount = async () => {
         Promise.all([
-            fetch("https://deezerdevs-deezer.p.rapidapi.com/album/" + this.state.albumId, {
+            fetch("https://deezerdevs-deezer.p.rapidapi.com/album/" + this.state.newComment.elementId, {
                 "method": "GET",
                 "headers": {
                     "x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
@@ -74,17 +130,18 @@ class AlbumDetails extends Component {
                 .then(res => res.json())
                 .then(respObj => this.setState({
                     album: respObj,
-                    loading: false
+
                 })),
 
-            fetch(commentUrl + this.state.albumId, {
+            fetch(commentUrl + this.state.newComment.elementId, {
                 headers: new Headers({
                     'Authorization': 'Basic ' + btoa("user16:c9WEUxMS294hN6fF"),
                 })
             })
                 .then((response) => response.json())
                 .then(respObj => this.setState({
-                    coments: respObj
+                    coments: respObj,
+                    loading: false
                 }))
 
         ]).catch(err => console.log(err))
@@ -92,9 +149,30 @@ class AlbumDetails extends Component {
     render() {
         return (
             <>
+                {this.state.album &&
+                    <Col md={10} className="col-10 gray-bg" >
+                        <Row className="row row-cols-xs-1" >
+                            <div id="content" className="col-12 col-md-4 d-flex justify-content-end">
+                                <div id="artist" className="card mt-5">
+                                    <Image onClick={this.showComments} src={this.state.album.cover_xl} style={{ height: "250px" }} />
+                                    <p></p>
+                                    <h4 id="label1">{this.state.album.artist.name} - {this.state.album.title}</h4>
+                                    <button type="button" className="btn">PLAY</button>
+                                    <Link to={"/artistdetails/" + this.state.album.artist.id}><label id="label2">{this.state.album.artist.name}</label></Link>
+                                </div>
+                            </div>
+                            <div id="songs" className="col">
+                                <div className="card">
+                                    {this.state.album.tracks.data.map((song, i) =>
+                                        <Song key={i} song={song} />
+                                    )}
+                                </div>
+                            </div>
+                        </Row>
+                    </Col>
+                }
                 {this.state.loading &&
                     <Col md={10} style={{ height: "90vh" }} className="col-10 gray-bg" >
-                        {console.log(this.props)}
                         <Row className="row row-cols-xs-1" >
                             <div id="content" className="col-12 col-md-4 d-flex justify-content-end">
                                 <Spinner className="align-self-center" animation="border" variant="light" />
@@ -105,41 +183,9 @@ class AlbumDetails extends Component {
                         </Row>
                     </Col>
                 }
-                {this.state.album &&
-                    <Col md={10} className="col-10 gray-bg" >
-                        <Row className="row row-cols-xs-1" >
-                            <div id="content" className="col-12 col-md-4 d-flex justify-content-end">
-                                <div id="artist" className="card mt-5">
-                                    <Image onClick={this.showComments} src={this.state.album.cover_xl} style={{ height: "250px" }} />
-                                    <p></p>
-                                    <h4 id="label1">{this.state.album.artist.name} - {this.state.album.title}</h4>
-                                    <button type="button" className="btn">PLAY</button>
-                                    <label id="label2">{this.state.album.artist.name}</label>
-                                </div>
-                            </div>
-                            <div id="songs" className="col">
-                                <div className="card">
-                                    {this.state.album.tracks.data.slice(0, 10).map((song, i) =>
-
-                                        <div key={i}>
-                                            <div className="d-flex justify-content-between">
-                                                <p><i className="fa fa-music pr-3"></i>{song.title}</p>
-                                                <p>{song.duration / 100}</p>
-                                            </div>
-                                            <div className="text-left">
-                                                <p>{song.artist.name}</p>
-                                            </div>
-                                            <p className="songNr">{i}</p>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        </Row>
-                    </Col>
-                }
                 <Modal className="modal_color"
                     show={this.state.showModal}
-                    onHide={() => this.setState({ showModal: !this.state.showModal })}
+                    onHide={() => this.setState({ showModal: !this.state.showModal, addComment: false, editComment: false })}
                 >
                     <Modal.Header closeButton>
                         <Modal.Title>Movie comments</Modal.Title>
@@ -147,12 +193,12 @@ class AlbumDetails extends Component {
                     <Modal.Body>
                         <div className="my-3">
                             {this.state.showModal &&
-                                <CommentList deleteComment={this.deleteComment} editComment={this.editComment} id={this.state.albumId} />
+                                <CommentList loading={this.state.loading} deleteComment={this.deleteComment} editComment={this.editComment} id={this.state.newComment.elementId} />
                             }
                             <div className="d-flex justify-content-center mt-3">
                                 <Button onClick={() => {
                                     this.setState({
-                                        addComment: !this.state.addComment
+                                        addComment: !this.state.addComment, editComment: false
                                     });
                                 }}>Add Comment</Button>
                             </div>
