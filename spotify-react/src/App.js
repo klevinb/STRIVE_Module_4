@@ -1,13 +1,17 @@
 import React from 'react';
 import './App.css';
-import { Container } from 'react-bootstrap'
+import { Container, Row } from 'react-bootstrap'
+import SideBar from './components/SideBar'
+import Content from './components/Content'
+import Footer from './components/Footer'
+
 
 
 function App() {
   return (
     <div className="App">
-      <Container>
-        <Row>
+      <Container fluid>
+        <Row md={2} style={{ display: 'flex' }} >
           <SideBar />
           <Content />
         </Row>
