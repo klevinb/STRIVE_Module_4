@@ -9,7 +9,7 @@ function SideBar(props) {
             <Col id="menu" md={2} className="col-2 black-bg">
                 <div>
                     <Image src="/assets/spotify.png" width="120px" height="40px" />
-                    <ListGroup id="menuOl">
+                    <ListGroup id="menuOl" className="text-left">
                         <ListGroupItem><i className="fa fa-home pr-2"></i>Home</ListGroupItem>
                         <ListGroupItem className="border-left"><i className="fa fa-search pr-2"></i>Search</ListGroupItem>
                         <ListGroupItem><i className="fa fa-bookmark pr-2"></i>Your Library</ListGroupItem>

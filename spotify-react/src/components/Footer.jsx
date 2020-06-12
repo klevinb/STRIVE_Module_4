@@ -37,7 +37,6 @@ function Footer(props) {
                     <Button><i className="fa fa-bars ml-3 pt-3"></i></Button>
                     <Button><i className="fa fa-headphones ml-3 pt-3"></i></Button>
                     <Button id="volumeIcon"><i className="fa fa-volume-up ml-3 pt-3"></i></Button>
-                    <InputGroup id="volume" type="range" min="0" max="100" value="80" step="1"></InputGroup>
                 </div>
 
             </div>
