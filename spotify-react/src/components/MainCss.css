@@ -49,6 +49,10 @@ footer .btn {
 footer .btn.btn-primary {
     border: 0 !important;
 }
+.myAlbum .btn {
+    background: transparent !important;
+}
+
 .btn.btn-primary:focus {
     outline: none !important;
 }
