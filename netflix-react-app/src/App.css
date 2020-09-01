@@ -46,13 +46,14 @@ h4 {
 .col img {
   transition: transform 0.2s;
 }
-.col img:hover {
+.col:hover {
+  z-index: 2;
   transform: scale(1.1);
 }
 .dropdown-menu.bg-dark .dropdown-item {
-  color:white !important;
+  color: white !important;
 }
 
 .dropdown-menu.bg-dark .dropdown-item:hover {
-  color:#221f1f !important;
+  color: #221f1f !important;
 }

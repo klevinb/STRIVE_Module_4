@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Navbar, Nav, InputGroup, FormControl } from "react-bootstrap";
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from "react-router-dom";
 
 class NetflixNavbar extends Component {
   constructor(props) {
@@ -13,6 +13,7 @@ class NetflixNavbar extends Component {
   searchStringHandler = (e) => {
     if (e.keyCode === 13) {
       // WHEN ENTER KEY IS PRESSED
+      this.props.history.push("/");
       this.props.showSearchResult(this.state.searchString);
     } else {
       this.setState({ searchString: e.currentTarget.value });
@@ -22,80 +23,90 @@ class NetflixNavbar extends Component {
   render() {
     return (
       <>
-        {!this.props.register ?
+        {!this.props.register ? (
           <>
-            <Navbar variant="dark" expand="lg" style={{ backgroundColor: "#221f1f" }}>
+            <Navbar
+              variant='dark'
+              expand='lg'
+              style={{ backgroundColor: "#221f1f" }}
+            >
               <Navbar.Brand>
                 <img
-                  src="/assets/logo.png"
-                  alt="logo"
+                  src='/assets/logo.png'
+                  alt='logo'
                   style={{ width: "100px", height: "55px" }}
                   onClick={() => {
-                    this.props.props.history.push("/")
+                    this.props.props.history.push("/");
                   }}
                 />
               </Navbar.Brand>
-              <Navbar.Toggle aria-controls="basic-navbar-nav" />
-              <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="mr-auto">
-                  <Link to={"/"} className="nav-link font-weight-bold">
+              <Navbar.Toggle aria-controls='basic-navbar-nav' />
+              <Navbar.Collapse id='basic-navbar-nav'>
+                <Nav className='mr-auto'>
+                  <Link
+                    to={"/"}
+                    onClick={() => this.props.resetState()}
+                    className='nav-link font-weight-bold'
+                  >
                     Home
-            </Link>
-                  <Link to={"/"} className="nav-link font-weight-bold">
+                  </Link>
+                  <Link to={"/"} className='nav-link font-weight-bold'>
                     TV Shows
-            </Link>
-                  <Link to={"/"} className="nav-link font-weight-bold">
+                  </Link>
+                  <Link to={"/"} className='nav-link font-weight-bold'>
                     Movies
-            </Link>
-                  <Link to={"/"} className="nav-link font-weight-bold">
+                  </Link>
+                  <Link to={"/"} className='nav-link font-weight-bold'>
                     Recently Added
-            </Link>
-                  <Link to={"/"} className="nav-link font-weight-bold">
+                  </Link>
+                  <Link to={"/"} className='nav-link font-weight-bold'>
                     My List
-            </Link>
-                  <Link to={"/register"} className="nav-link font-weight-bold">
+                  </Link>
+                  <Link to={"/register"} className='nav-link font-weight-bold'>
                     Register
-            </Link>
+                  </Link>
                 </Nav>
-                <span className="d-none d-md-flex align-items-center">
-                  <InputGroup className="icons">
+                <span className='d-none d-md-flex align-items-center'>
+                  <InputGroup className='icons'>
                     <FormControl
-                      placeholder="Search and press enter"
-                      aria-label="search"
-                      aria-describedby="basic-addon1"
+                      placeholder='Search and press enter'
+                      aria-label='search'
+                      aria-describedby='basic-addon1'
                       onKeyDown={this.searchStringHandler}
                       onChange={this.searchStringHandler}
                       value={this.state.searchString}
                     />
                   </InputGroup>
-                  <div id="kids">KIDS</div>
-                  <i className="fa fa-bell icons"></i>
-                  <i className="fa fa-user icons"></i>
+                  <div id='kids'>KIDS</div>
+                  <i className='fa fa-bell icons'></i>
+                  <i className='fa fa-user icons'></i>
                 </span>
               </Navbar.Collapse>
             </Navbar>
           </>
-          :
+        ) : (
           <>
-            <Navbar variant="dark" expand="lg" style={{ backgroundColor: "#221f1f" }}>
+            <Navbar
+              variant='dark'
+              expand='lg'
+              style={{ backgroundColor: "#221f1f" }}
+            >
               <Navbar.Brand>
                 <img
-                  src="/assets/logo.png"
-                  alt="logo"
+                  src='/assets/logo.png'
+                  alt='logo'
                   style={{ width: "100px", height: "55px" }}
                   onClick={() => {
-                    this.props.props.history.push("/")
+                    this.props.props.history.push("/");
                   }}
                 />
               </Navbar.Brand>
             </Navbar>
           </>
-
-        }
-
+        )}
       </>
     );
   }
 }
 
-export default NetflixNavbar;
+export default withRouter(NetflixNavbar);

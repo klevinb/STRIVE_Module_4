@@ -58,23 +58,21 @@ footer {
 }
 
 .col img {
-  transition: transform 0.2s;
+  transition: transform 0.5s;
 }
 
 .col img:hover {
   transform: scale(1.1);
 }
 
-.errorMessage{
+.errorMessage {
   color: red;
 }
 
-
-#email:focus+.errorMessage,
-#name:focus+.errorMessage,
-#surname:focus+.errorMessage,
-#password:focus+.errorMessage,
-#birthDay:focus+.errorMessage {
-  display:none;
-
+#email:focus + .errorMessage,
+#name:focus + .errorMessage,
+#surname:focus + .errorMessage,
+#password:focus + .errorMessage,
+#birthDay:focus + .errorMessage {
+  display: none;
 }

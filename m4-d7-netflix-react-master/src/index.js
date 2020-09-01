@@ -4,16 +4,16 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Route } from 'react-router-dom'
-import ShowDetail from './components/ShowDetail'
-import Register from './components/Register'
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import ShowDetail from "./components/ShowDetail";
+import Register from "./components/Register";
 
 ReactDOM.render(
   // <React.StrictMode>
   <Router>
-    <Route path="/" exact component={App}></Route>
-    <Route path="/details/:id" component={ShowDetail}></Route>
-    <Route path="/register/" exact component={Register}></Route>
+    <Route path='/' exact component={App}></Route>
+    <Route path='/details/:id' component={ShowDetail}></Route>
+    <Route path='/register/' exact component={Register}></Route>
   </Router>,
   // </React.StrictMode>,
   document.getElementById("root")

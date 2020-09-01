@@ -16,11 +16,11 @@ class MyRestaurant extends Component {
 
     //THIS IS THE ONLY MOMENT IN WHICH YOU CAN CHANGE THE STATE VIA this.state = { ... }
     this.state = {
-      selectedDish: null
+      selectedDish: null,
     };
   }
 
-  dishSelected = dish => {
+  dishSelected = (dish) => {
     this.setState({ selectedDish: dish });
   };
 
@@ -38,12 +38,16 @@ class MyRestaurant extends Component {
           - otherwise do not interfere
         */}
 
-        <Container className="my-5">
-          <Route path="/" exact component={HomePage} />
-          <Route path="/menu" exact component={MenuPage} />
-          <Route path="/reservation" exact component={AddReservationControlled} />
-          <Route path="/oldreservation" exact component={AddReservation} />
-          <Route path="/dishdetails/:dishId" component={DishDetail} />
+        <Container className='my-5'>
+          <Route path='/' exact component={HomePage} />
+          <Route path='/menu' exact component={MenuPage} />
+          <Route
+            path='/reservation'
+            exact
+            component={AddReservationControlled}
+          />
+          <Route path='/oldreservation' exact component={AddReservation} />
+          <Route path='/dishdetails/:dishId' component={DishDetail} />
 
           {/* <Route path="/(food|dishes)" render={MenuPage} /> */}
 
@@ -62,16 +66,10 @@ class MyRestaurant extends Component {
     );
   }
 
-  updateColumns = colSizeInput => {
-    //DON'T TRY THIS AT HOME! This update the state but doesn't update the DOM
-    //this.state.colSize = colSizeInput.currentTarget.value;
-
-    //ALWAYS USE THIS SET STATE FOR UPDATING THE STATE
+  updateColumns = (colSizeInput) => {
     this.setState({
-      colSize: colSizeInput.currentTarget.value
+      colSize: colSizeInput.currentTarget.value,
     });
-
-    //colSize => [column123], [column4321]
   };
 }
 
